@@ -1,9 +1,13 @@
-import Navbar from "./components/Navbar";
+import React from "react";
+import "./App.css";
+import LandingPage from "./Pages/LandingPage";
 
-export default function App() {
+function App() {
   return (
     <>
-      <Navbar></Navbar>
+      <LandingPage />
     </>
   );
 }
+
+export default App;

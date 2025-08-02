@@ -8,7 +8,7 @@ import s from "../assets/search.png";
 import e from "../assets/email.png";
 import ph from "../assets/phone.png";
 
-function App() {
+function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -112,4 +112,4 @@ function App() {
   );
 }
 
-export default App;
+export default Navbar;
