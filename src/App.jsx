@@ -1,14 +1,15 @@
 
 
 import './index.css'
-import ContactForm from './ContactForm';
+import AdminLogin from './Components/AdminLogin';
 
 function App() {
   return (
-    <>
-      <ContactForm />
-    </>
+    <div>
+      <AdminLogin />
+    </div>
   );
 }
 
 export default App;
+
