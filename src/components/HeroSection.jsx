@@ -24,10 +24,12 @@ const HeroSection = () => {
               </p>
             </hgroup>
 
-            <button className="group bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 flex items-center justify-center space-x-2">
-              <span>Request a Demo</span>
-              <FaArrowRight className="transition-transform group-hover:translate-x-1" />
-            </button>
+            <nav className="flex flex-col sm:flex-row gap-4">
+              <button className="group bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 flex items-center justify-center space-x-2">
+                <span>Request a Demo</span>
+                <FaArrowRight className="transition-transform group-hover:translate-x-1" />
+              </button>
+            </nav>
           </header>
 
           <aside className="flex justify-center items-center flex-1 w-full lg:justify-end">
