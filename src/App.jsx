@@ -1,15 +1,19 @@
 import React from "react";
-import Footer from "./components/Footer";
+import CareerPage from "./components/CareerPage";
+import Footer from "./Footer";
 
 function App() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex-grow">
-      </main>
+    <>
+      <div className="p-4 bg-gray-100 min-h-screen">
+        <CareerPage />
+        <br />
+        <br />
+        <br />
+      </div>
+
       <Footer />
-    </div>
-
-
+    </>
   );
 }
 
