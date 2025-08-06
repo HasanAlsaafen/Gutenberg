@@ -9,7 +9,7 @@ const CareerForm = ({ jobs }) => {
         name: "",
         email: "",
         phone: "",
-        title: "",
+        cover: "",
         cv: null,
     });
 
@@ -19,7 +19,8 @@ const CareerForm = ({ jobs }) => {
     const validate = () => {
         const err = {};
         if (!formData.name) err.name = "Name is required.";
-        if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) err.email = "Valid email is required.";
+        if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email))
+            err.email = "Valid email is required.";
         if (!formData.phone) err.phone = "Phone is required.";
         if (!formData.cv) err.cv = "Please upload your CV.";
         return err;
@@ -63,7 +64,9 @@ const CareerForm = ({ jobs }) => {
                             <legend className="sr-only">Applicant Information</legend>
 
                             <section>
-                                <label htmlFor="name" className="block text-sm font-medium">Full Name</label>
+                                <label htmlFor="name" className="block text-sm font-medium">
+                                    Full Name
+                                </label>
                                 <input
                                     type="text"
                                     id="name"
@@ -72,11 +75,15 @@ const CareerForm = ({ jobs }) => {
                                     onChange={handleChange}
                                     className="w-full p-2 border rounded"
                                 />
-                                {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                                {errors.name && (
+                                    <p className="text-red-500 text-sm">{errors.name}</p>
+                                )}
                             </section>
 
                             <section>
-                                <label htmlFor="email" className="block text-sm font-medium">Email</label>
+                                <label htmlFor="email" className="block text-sm font-medium">
+                                    Email
+                                </label>
                                 <input
                                     type="email"
                                     id="email"
@@ -85,11 +92,15 @@ const CareerForm = ({ jobs }) => {
                                     onChange={handleChange}
                                     className="w-full p-2 border rounded"
                                 />
-                                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                                {errors.email && (
+                                    <p className="text-red-500 text-sm">{errors.email}</p>
+                                )}
                             </section>
 
                             <section>
-                                <label htmlFor="phone" className="block text-sm font-medium">Phone</label>
+                                <label htmlFor="phone" className="block text-sm font-medium">
+                                    Phone
+                                </label>
                                 <input
                                     type="text"
                                     id="phone"
@@ -98,22 +109,32 @@ const CareerForm = ({ jobs }) => {
                                     onChange={handleChange}
                                     className="w-full p-2 border rounded"
                                 />
-                                {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+                                {errors.phone && (
+                                    <p className="text-red-500 text-sm">{errors.phone}</p>
+                                )}
                             </section>
 
                             <section>
-                                <label htmlFor="cover" className="block text-sm font-medium">Cover Letter</label>
+                                <label
+                                    htmlFor="cover"
+                                    className="block text-sm font-medium"
+                                >
+                                    Cover Letter
+                                </label>
                                 <textarea
                                     id="cover"
                                     name="cover"
                                     value={formData.cover}
                                     onChange={handleChange}
-                                    className="w-full p-2 border rounded"
+                                    className="w-full p-2 border rounded resize-none"
+                                    rows={4}
                                 />
                             </section>
 
                             <section>
-                                <label htmlFor="cv" className="block text-sm font-medium">Upload CV</label>
+                                <label htmlFor="cv" className="block text-sm font-medium">
+                                    Upload CV
+                                </label>
                                 <input
                                     type="file"
                                     id="cv"
@@ -121,15 +142,16 @@ const CareerForm = ({ jobs }) => {
                                     onChange={handleChange}
                                     className="w-full"
                                 />
-                                {errors.cv && <p className="text-red-500 text-sm">{errors.cv}</p>}
+                                {errors.cv && (
+                                    <p className="text-red-500 text-sm">{errors.cv}</p>
+                                )}
                             </section>
                         </fieldset>
 
                         <footer>
-                            <button type="submit" className="bg-violet-500 text-white px-4 py-2 rounded hover:bg-violet-600 transition">
+                            <button type="submit" className="bg-violet-500 text-white px-4 py-2 rounded hover:bg-violet-600 transition w-full sm:w-auto">
                                 Submit Application
                             </button>
-
                         </footer>
                     </form>
                 )}
