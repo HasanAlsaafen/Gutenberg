@@ -26,7 +26,10 @@ function ContactForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10">
+    <div
+      id="contact"
+      className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-10"
+    >
       <div className="w-full max-w-4xl">
         <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-10">
           Contact Us
