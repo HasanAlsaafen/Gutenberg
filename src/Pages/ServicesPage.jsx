@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import Navbar from "../components/Nav";
+import Footer from "../components/Footer";
 import {
   FaCode,
   FaCog,
