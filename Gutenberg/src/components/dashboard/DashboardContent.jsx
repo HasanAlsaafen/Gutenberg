@@ -5,6 +5,7 @@ import ReadyTools from "./ReadyTools";
 import AIIntegration from "./AIIntegration";
 import SystemConsultation from "./SystemConsultation";
 import ClientManagement from "./ClientManagement";
+import ReviewOrders from "./ReviewOrders";
 import ProjectTimeline from "./ProjectTimeline";
 import Analytics from "./Analytics";
 import Settings from "./Settings";
@@ -25,6 +26,8 @@ const DashboardContent = ({ activeSection }) => {
         return <SystemConsultation />;
       case "clients":
         return <ClientManagement />;
+      case "orders":
+        return <ReviewOrders />;
       case "timeline":
         return <ProjectTimeline />;
       case "analytics":
