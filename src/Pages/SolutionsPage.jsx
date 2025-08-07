@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import st from "../assets/solu.png";
+import st from "/assets/solu.png";
 import Navbar from "../components/Nav";
 import Footer from "../components/Footer";
 
