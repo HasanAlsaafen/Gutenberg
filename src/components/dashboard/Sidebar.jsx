@@ -12,6 +12,7 @@ import {
   FaBars,
   FaHome,
   FaTimes,
+  FaClipboardList,
 } from "react-icons/fa";
 
 const Sidebar = ({
@@ -30,6 +31,7 @@ const Sidebar = ({
 
   const secondaryItems = [
     { id: "clients", label: "Client Management", icon: FaUsers },
+    { id: "orders", label: "Review Orders", icon: FaClipboardList },
     { id: "timeline", label: "Project Timeline", icon: FaClock },
     { id: "analytics", label: "Analytics & Reports", icon: FaChartBar },
     { id: "settings", label: "Settings", icon: FaCogs },

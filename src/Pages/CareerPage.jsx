@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import CareerCard from "../components/CareerCard";
@@ -9,11 +10,11 @@ function CareerPage() {
   const [allJobs, setAllJobs] = useState([]);
 
   useEffect(() => {
-    fetch("https://gutenberg-server-production.up.railway.app/api/job")
-      .then((res) => res.json())
-      .then((data) => {
-        setJobs(data);
-        setAllJobs(data);
+    axios
+      .get("/api/Job")
+      .then((res) => {
+        setJobs(res.data);
+        setAllJobs(res.data);
       })
       .catch((error) => {
         console.error("Error fetching jobs:", error);

@@ -10,8 +10,7 @@ export default function Solutions() {
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    const API =
-      "https://gutenberg-server-production.up.railway.app/api/solution";
+    const API = "/api/solution";
 
     fetch(API)
       .then((res) => {
