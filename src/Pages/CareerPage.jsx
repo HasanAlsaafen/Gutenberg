@@ -1,46 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import CareerCard from "../components/CareerCard";
-import CareerForm from "../components/CareerForm";22
-const dummyJobs = [
-  {
-    id: 1,
-    title: "Frontend Developer",
-    company: "Tech Corp",
-    location: "Remote",
-    experience: "Junior Level",
-    type: "Full Time",
-    skills: ["React", "JavaScript", "CSS"],
-    postedOn: new Date("2025-08-01"),
-  },
-  {
-    id: 2,
-    title: "Backend Developer",
-    company: "Code Inc",
-    location: "On-site",
-    experience: "Mid Level",
-    type: "Part Time",
-    skills: ["Node.js", "Express", "MongoDB"],
-    postedOn: new Date("2025-07-30"),
-  },
-  {
-    id: 3,
-    title: "iOS Developer",
-    company: "Apple Systems",
-    location: "Remote",
-    experience: "Fresher",
-    type: "Contract",
-    skills: ["Swift", "UIKit"],
-    postedOn: new Date("2025-07-29"),
-  },
-];
+import CareerForm from "../components/CareerForm";
 
 function CareerPage() {
-  const [jobs, setJobs] = useState(dummyJobs);
+  const [jobs, setJobs] = useState([]);
+  const [allJobs, setAllJobs] = useState([]);
+
+  useEffect(() => {
+    fetch("https://gutenberg-server-production.up.railway.app/api/job")
+      .then((res) => res.json())
+      .then((data) => {
+        setJobs(data);
+        setAllJobs(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching jobs:", error);
+      });
+  }, []);
 
   const fetchJobsCustom = (criteria) => {
-    const filtered = dummyJobs.filter((job) => {
+    const filtered = allJobs.filter((job) => {
       return (
         (criteria.title === "" || job.title === criteria.title) &&
         (criteria.location === "" || job.location === criteria.location) &&
@@ -54,12 +35,11 @@ function CareerPage() {
   };
 
   return (
-
     <Routes>
       <Route
         path="/"
         element={
-          <main className="px-10">
+          <main className="px-4 sm:px-6 md:px-10 lg:px-20 xl:px-40 max-w-[1200px] mx-auto">
             <section className="mb-6">
               <h1 className="text-2xl font-bold">
                 Welcome to the available job opportunities at Trusted Systems
@@ -71,7 +51,9 @@ function CareerPage() {
 
             <section className="space-y-4 my-6">
               {jobs.length > 0 ? (
-                jobs.map((job) => <CareerCard key={job.id} {...job} />)
+                jobs.map((job) => (
+                  <CareerCard key={job.jobId || job.id} {...job} />
+                ))
               ) : (
                 <p className="text-center text-gray-500">No jobs found.</p>
               )}
@@ -81,9 +63,9 @@ function CareerPage() {
       />
 
       <Route
-        path="/careers/:id"
+        path=":id"
         element={
-          <main className="px-10">
+          <main className="px-4 sm:px-6 md:px-10 lg:px-20 xl:px-40 max-w-[1200px] mx-auto">
             <CareerForm jobs={jobs} />
           </main>
         }

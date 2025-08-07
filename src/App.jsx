@@ -6,6 +6,7 @@ import LoginPage from "./Pages/LoginPage";
 import Dashboard from "./Pages/Dashboard";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./components/NotFound";
+import CareerForm from "./components/CareerForm";
 function App() {
   return (
     <>
@@ -13,10 +14,11 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/careers" element={<CareerPage />} />
+        <Route path="/careers/*" element={<CareerPage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/solutions" element={<LandingPage />} />
-        <Route path="*" element={<NotFound />} />
+        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
     </>
   );
