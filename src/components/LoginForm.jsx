@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContextContext.jsx";
 
 export default function LoginForm() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState([]);
@@ -29,6 +32,7 @@ export default function LoginForm() {
       (u) => u.email === email && u.password === password
     );
     if (found) {
+      login(found); // set user in context
       if (found.type === "admin") {
         navigate("/dashboard");
       } else {
