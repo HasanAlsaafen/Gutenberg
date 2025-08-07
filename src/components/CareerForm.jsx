@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useParams } from "react-router-dom";
 
 const CareerForm = ({ jobs }) => {
@@ -82,9 +83,7 @@ const CareerForm = ({ jobs }) => {
     // Phone validation
     if (!formData.phone.trim()) {
       err.phone = "رقم الهاتف مطلوب";
-    } else if (
-      !/^[\d\s\+\-\(\)]{10,}$/.test(formData.phone.replace(/\s/g, ""))
-    ) {
+    } else if (!/^[\d\s+\-()]{10,}$/.test(formData.phone.replace(/\s/g, ""))) {
       err.phone = "رقم الهاتف غير صحيح";
     }
 
@@ -182,55 +181,24 @@ const CareerForm = ({ jobs }) => {
         attachment: base64CV,
       };
 
-      const response = await fetch(
-        "https://gutenberg-server-production.up.railway.app/api/application",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const fullPayload = {
+        ...payload,
+        applicationDate: new Date().toISOString(),
+        applicationStatus: "Pending",
+      };
+
+      const response = await axios.post("/api/Application", fullPayload, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
 
       // Log response for debugging
       console.log("Response status:", response.status);
-      console.log("Response headers:", [...response.headers.entries()]);
+      console.log("Response data:", response.data);
 
-      if (!response.ok) {
-        let errorMessage = "حدث خطأ غير متوقع";
-
-        try {
-          const errorData = await response.json();
-          console.log("Error response:", errorData);
-          errorMessage = errorData.message || errorData.title || errorMessage;
-        } catch (parseError) {
-          console.log("Could not parse error response:", parseError);
-          // If we can't parse JSON, try to get text
-          try {
-            const errorText = await response.text();
-            console.log("Error text:", errorText);
-            errorMessage = errorText || errorMessage;
-          } catch (textError) {
-            console.log("Could not get error text:", textError);
-          }
-        }
-
-        if (response.status === 400) {
-          throw new Error(errorMessage || "البيانات المدخلة غير صحيحة");
-        } else if (response.status === 404) {
-          throw new Error("الوظيفة غير موجودة أو منتهية الصلاحية");
-        } else if (response.status === 409) {
-          throw new Error("لقد تقدمت لهذه الوظيفة مسبقاً");
-        } else if (response.status === 500) {
-          throw new Error(
-            "خطأ في الخادم. يرجى المحاولة لاحقاً أو التواصل مع الدعم الفني"
-          );
-        } else {
-          throw new Error(errorMessage);
-        }
-      }
+      // Axios throws on non-2xx, so handle errors in catch
 
       setSubmitted(true);
       setUploadProgress(100);
