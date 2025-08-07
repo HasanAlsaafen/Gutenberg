@@ -75,7 +75,7 @@ export default function Solutions() {
               aria-label={`Read more about ${solution.title}`}
             >
               <img
-                src={`../src/assets/${solution.image}`}
+                src={`assets/${solution.image}`}
                 alt={solution.title}
                 className="w-16 h-16 mx-auto mb-3"
               />
@@ -103,7 +103,7 @@ export default function Solutions() {
             </button>
 
             <img
-              src={`../src/assets/${selected.image}`}
+              src={`assets/${selected.image}`}
               alt={selected.title}
               className="w-24 h-24 mx-auto mb-4"
             />
