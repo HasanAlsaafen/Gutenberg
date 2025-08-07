@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../App.css";
-import solutionLogo from "../assets/solution.png";
+import solutionLogo from "/assets/solution.png";
 import f from "/assets/fa.png";
 import i from "/assets/in.png";
 import x from "/assets/ti.png";
