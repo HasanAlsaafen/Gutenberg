@@ -150,6 +150,9 @@ function Navbar() {
               <li className="navbar-mobile-item">
                 <a href="#contact">Contact</a>
               </li>
+              <li className="navbar-mobile-item">
+                <Link href="/careers">Careers</Link>
+              </li>
             </ul>
             <form onSubmit={handleSearch} className="navbar-mobile-search">
               <input
