@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "../App.css";
 import solutionLogo from "../assets/solution.png";
-import f from "../assets/fa.png";
-import i from "../assets/in.png";
-import x from "../assets/ti.png";
-import s from "../assets/search.png";
-import e from "../assets/email.png";
-import ph from "../assets/phone.png";
+import f from "/assets/fa.png";
+import i from "/assets/in.png";
+import x from "/assets/ti.png";
+import s from "/assets/search.png";
+import e from "/assets/email.png";
+import ph from "/assets/phone.png";
 import { Link } from "react-router-dom";
 
 function Navbar() {
