@@ -36,6 +36,8 @@ function ContactForm() {
         </h2>
 
         <form
+          action="https://formspree.io/f/xqalgjyl"
+          method="POST"
           onSubmit={handleSubmit}
           className="bg-white p-8 rounded-lg shadow-md"
         >
