@@ -26,6 +26,8 @@ function App() {
         <Route path="/careers" element={<CareerPage />} />
         <Route path="/careers/*" element={<CareerPage />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/services/:serviceId" element={<ServicesPage />} />
+
         <Route path="/" element={<LandingPage />} />
         <Route path="/solutions" element={<SolutionsPage />} />
         {/* Add other routes as needed */}

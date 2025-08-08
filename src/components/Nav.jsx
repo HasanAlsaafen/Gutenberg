@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../App.css";
 import solutionLogo from "/assets/solution.png";
 import f from "/assets/fa.png";
@@ -7,12 +7,14 @@ import x from "/assets/ti.png";
 import s from "/assets/search.png";
 import e from "/assets/email.png";
 import ph from "/assets/phone.png";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [services, setServices] = useState([]);
+  const navigate = useNavigate();
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
@@ -20,7 +22,17 @@ function Navbar() {
       alert(`Searching for: ${searchTerm}`);
     }
   };
-
+  useEffect(() => {
+    axios
+      .get("https://gutenberg-server-production.up.railway.app/api/services")
+      .then((res) => setServices(res.data));
+  }, []);
+  const handleChange = (e) => {
+    const serviceId = e.target.value;
+    if (serviceId) {
+      navigate(`services/${serviceId}`);
+    }
+  };
   const handleQuoteRequest = () => {
     console.log("Quote requested");
     alert("Quote requested!");
@@ -96,7 +108,16 @@ function Navbar() {
               <Link to="/">Home</Link>
             </li>
             <li className="navbar-menu-item">
-              <Link to="/services">Services</Link>
+              <select onChange={handleChange} defaultValue="">
+                <option value="" disabled>
+                  services
+                </option>
+                {services.map((item) => (
+                  <option key={item.serviceId} value={item.serviceId}>
+                    {item.title}
+                  </option>
+                ))}
+              </select>
             </li>
             <li className="navbar-menu-item">
               <Link to="/solutions">Solutions</Link>
@@ -141,8 +162,17 @@ function Navbar() {
               <li className="navbar-mobile-item">
                 <Link to="/">Home</Link>
               </li>
-              <li className="navbar-mobile-item">
-                <Link to="/services">Services</Link>
+              <li className="navbar-menu-item">
+                <select onChange={handleChange} defaultValue="">
+                  <option value="" disabled>
+                    services
+                  </option>
+                  {services.map((item) => (
+                    <option key={item.serviceId} value={item.serviceId}>
+                      {item.title}
+                    </option>
+                  ))}
+                </select>
               </li>
               <li className="navbar-mobile-item">
                 <Link to="/solutions">Solutions</Link>
