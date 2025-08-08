@@ -14,10 +14,10 @@ export default function LoginForm() {
       <section className="bg-white p-6 rounded-md shadow-md w-full max-w-sm">
         <header>
           <h1 className="text-xl font-semibold text-center text-[#1e293b] mb-2">
-            Admin Login
+            Member Login
           </h1>
           <p className="text-center text-gray-600 mb-6 text-sm">
-            Please enter your admin information to continue.
+            Please enter your information to continue.
           </p>
         </header>
 
@@ -33,7 +33,7 @@ export default function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="admin@example.com"
+              placeholder="Member@example.com"
             />
           </div>
 

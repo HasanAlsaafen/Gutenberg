@@ -21,18 +21,17 @@ const Sidebar = ({
   setActiveSection,
 }) => {
   const navigationItems = [
-    { id: "overview", label: "Dashboard Overview", icon: FaHome },
-    { id: "custom-software", label: "Custom Software", icon: FaCode },
-    { id: "ready-tools", label: "Ready-Made Tools", icon: FaCog },
-    { id: "ai-integration", label: "AI Integration", icon: FaBrain },
-    { id: "consultation", label: "System Consultation", icon: FaDesktop },
+    { id: "AddUser", label: "Add User", icon: FaHome },
+    { id: "UserList", label: "User list", icon: FaCode },
   ];
 
   const secondaryItems = [
-    { id: "clients", label: "Client Management", icon: FaUsers },
-    { id: "timeline", label: "Project Timeline", icon: FaClock },
-    { id: "analytics", label: "Analytics & Reports", icon: FaChartBar },
-    { id: "settings", label: "Settings", icon: FaCogs },
+    { id: "CreateService", label: "Create Service", icon: FaUsers },
+    { id: "ServiceList", label: "Services ", icon: FaClock },
+  ];
+  const SolutionItems = [
+    { id: "CreateSolution", label: "Create Solution", icon: FaChartBar },
+    { id: "SolutionList", label: "Solution List", icon: FaCogs },
     { id: "support", label: "Support", icon: FaHeadset },
   ];
 
@@ -91,7 +90,7 @@ const Sidebar = ({
           <section>
             {!collapsed && (
               <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                Main Services
+                Users{" "}
               </h2>
             )}
             <ul className="space-y-1">
@@ -105,15 +104,31 @@ const Sidebar = ({
               ))}
             </ul>
           </section>
-
           <section className="mt-8">
             {!collapsed && (
               <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                Management
+                Services
               </h2>
             )}
             <ul className="space-y-1">
               {secondaryItems.map((item) => (
+                <NavItem
+                  key={item.id}
+                  item={item}
+                  isActive={activeSection === item.id}
+                  onClick={setActiveSection}
+                />
+              ))}
+            </ul>
+          </section>{" "}
+          <section className="mt-8">
+            {!collapsed && (
+              <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                Solutions
+              </h2>
+            )}
+            <ul className="space-y-1">
+              {SolutionItems.map((item) => (
                 <NavItem
                   key={item.id}
                   item={item}

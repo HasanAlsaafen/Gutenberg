@@ -65,7 +65,7 @@ export default function Solutions() {
         >
           {solutions.map((solution) => (
             <div
-              key={solution.id}
+              key={solution.solutionId}
               onClick={() => setSelected(solution)}
               className={`${
                 solution.bgColor || "bg-gray-100"
@@ -74,11 +74,13 @@ export default function Solutions() {
               tabIndex={0}
               aria-label={`Read more about ${solution.title}`}
             >
-              <img
-                src={`assets/${solution.image}`}
-                alt={solution.title}
-                className="w-16 h-16 mx-auto mb-3"
-              />
+              {solution.image && (
+                <img
+                  src={solution.image}
+                  alt={solution.title}
+                  className="w-16 h-16 mx-auto mb-3 object-cover rounded-full"
+                />
+              )}
 
               <h2 className="text-lg font-bold text-gray-800 mb-1">
                 {solution.title}
