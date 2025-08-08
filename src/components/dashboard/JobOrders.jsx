@@ -7,6 +7,7 @@ const JobOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [form, setForm] = useState({
     userId: "",
     title: "",
@@ -37,6 +38,7 @@ const JobOrders = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     const { userId, title, description, postedDate, deadline, postedBy } = form;
 
@@ -57,15 +59,6 @@ const JobOrders = () => {
       return;
     }
 
-    const payload = {
-      userId: parsedUserId,
-      title: title,
-      description: description,
-      postedDate: new Date(postedDate).toISOString(),
-      deadline: new Date(deadline).toISOString(),
-      PostedBy: postedBy,
-    };
-
     try {
       if (editingId) {
         // For PUT, include PostedBy and jobId
@@ -80,8 +73,16 @@ const JobOrders = () => {
         };
         await axios.put(`${API_URL}/${editingId}`, putPayload);
       } else {
-        // For POST, include PostedBy as it's required by API
-        await axios.post(API_URL, payload);
+        // For POST, use the form data for creating a job
+        await axios.post(API_URL, {
+          jobId: Math.floor(Math.random() * 1000), // Generate a random jobId or let the backend handle it
+          title: form.title,
+          description: form.description,
+          postedDate: new Date(form.postedDate).toISOString(),
+          deadline: new Date(form.deadline).toISOString(),
+          userId: Number(form.userId),
+        });
+        setSuccess("Job added successfully!");
       }
 
       setForm({
@@ -112,8 +113,10 @@ const JobOrders = () => {
 
   const handleDelete = async (id) => {
     setError("");
+    setSuccess("");
     try {
       await axios.delete(`${API_URL}/${id}`);
+      setSuccess("Job deleted successfully!");
       fetchOrders();
     } catch {
       setError("Failed to delete job.");
@@ -169,6 +172,15 @@ const JobOrders = () => {
           className="text-red-600 bg-red-50 p-4 rounded-lg border border-red-200"
         >
           {error}
+        </aside>
+      )}
+
+      {success && (
+        <aside
+          role="alert"
+          className="text-green-600 bg-green-50 p-4 rounded-lg border border-green-200"
+        >
+          {success}
         </aside>
       )}
 
