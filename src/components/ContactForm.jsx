@@ -19,12 +19,6 @@ function ContactForm() {
     });
   }
 
-  // عند إرسال الفورم
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log("Form submitted:", data);
-  }
-
   return (
     <div
       id="contact"
@@ -36,7 +30,8 @@ function ContactForm() {
         </h2>
 
         <form
-          onSubmit={handleSubmit}
+          action="https://formspree.io/f/xqalgjyl"
+          method="POST"
           className="bg-white p-8 rounded-lg shadow-md"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
