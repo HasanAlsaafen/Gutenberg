@@ -47,7 +47,6 @@ const JobOrders = () => {
       return;
     }
 
-    // PostedBy is required for both create and update
     if (!postedBy) {
       setError("Posted By field is required.");
       return;
@@ -61,7 +60,6 @@ const JobOrders = () => {
 
     try {
       if (editingId) {
-        // For PUT, include PostedBy and jobId
         const putPayload = {
           jobId: Number(editingId),
           userId: parsedUserId,

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Navbar from "../components/Nav";
 import Footer from "../components/Footer";
 import {
@@ -14,65 +15,44 @@ import {
 import CallToAction from "../components/CallToAction";
 
 const ServicesPage = () => {
-  // Template data - this will be replaced with API calls later
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [service, setService] = useState(null);
+  const [error, setError] = useState("");
+  const location = useLocation();
 
-  // Simulate API call - replace with real API later
   useEffect(() => {
-    // Enhanced service data with more details for template - showing only one service for now
-    const servicesTemplate = [
-      {
-        id: 1,
-        name: "Custom Software",
-        shortDescription: "Tailored digital solutions for your business",
-        description:
-          "We build tailored digital solutions designed specifically for your business requirements. Our team creates robust, scalable applications that perfectly align with your workflow, processes, and goals. From web applications to mobile apps, we deliver software that grows with your business and provides a competitive edge in your industry.",
-        detailedDescription:
-          "Our custom software development process begins with a thorough analysis of your business needs and goals. We work closely with you to understand your unique challenges and design solutions that not only address current requirements but also scale with your future growth. Our experienced development team uses cutting-edge technologies and follows industry best practices to ensure your software is reliable, secure, and maintainable.",
-        features: [
-          "Cross-platform apps",
-          "Clean scalable code",
-          "Agile development",
-          "Full-stack expertise",
-          "API integrations",
-          "Database design",
-          "UI/UX optimization",
-          "Performance monitoring",
-        ],
-        icon: FaCode,
-        category: "Development",
-        price: "Starting from $5,000",
-        duration: "2-6 months",
-        rating: 4.9,
-        reviewsCount: 127,
-        technologies: ["React", "Node.js", "Python", "AWS", "Docker"],
-        processSteps: [
-          "Requirements Analysis",
-          "System Design",
-          "Development & Testing",
-          "Deployment & Support",
-        ],
-        benefits: [
-          "Increased efficiency by 40%",
-          "Reduced operational costs",
-          "Improved user experience",
-          "Scalable architecture",
-        ],
-      },
-    ];
+    const queryParams = new URLSearchParams(location.search);
+    const serviceId = queryParams.get("serviceId");
 
-    const loadServices = () => {
-      setLoading(true);
-      // Simulate loading time
-      setTimeout(() => {
-        setServices(servicesTemplate);
-        setLoading(false);
-      }, 1500);
+    if (!serviceId) {
+      setError("No service selected. Please select a service from the menu.");
+      return;
+    }
+
+    const fetchService = async () => {
+      try {
+        const response = await fetch(
+          `https://gutenberg-server-production.up.railway.app/api/Services/${serviceId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch service details.");
+        }
+        const data = await response.json();
+        setService(data);
+      } catch (err) {
+        setError(err.message);
+      }
     };
 
-    loadServices();
-  }, []);
+    fetchService();
+  }, [location.search]);
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
+  if (!service) {
+    return <div>Loading service details...</div>;
+  }
 
   const ServiceSection = ({ service, index }) => {
     const Icon = service.icon;
@@ -252,21 +232,6 @@ const ServicesPage = () => {
     );
   };
 
-  // Loading Component
-  const LoadingComponent = () => (
-    <main className="min-h-screen bg-gradient-to-b from-white to-slate-50 flex items-center justify-center">
-      <section className="text-center">
-        <FaSpinner className="animate-spin text-4xl text-purple-600 mx-auto mb-4" />
-        <p className="text-xl text-gray-600">Loading our services...</p>
-        <p className="text-sm text-gray-500 mt-2">
-          Preparing detailed information for you
-        </p>
-      </section>
-    </main>
-  );
-
-  if (loading) return <LoadingComponent />;
-
   return (
     <main className="min-h-screen bg-gradient-to-b from-white to-slate-50">
       {/* Services Overview */}
@@ -287,19 +252,18 @@ const ServicesPage = () => {
 
       {/* Detailed Services Sections */}
       <section className="w-full">
-        {services.length > 0 ? (
-          services.map((service, index) => (
-            <ServiceSection key={service.id} service={service} index={index} />
-          ))
+        {service ? (
+          <ServiceSection service={service} index={0} />
         ) : (
           <section className="py-20 text-center bg-white">
             <article className="max-w-md mx-auto">
               <figure className="text-gray-400 text-6xl mb-4">🔍</figure>
               <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                No Services Found
+                No Service Found
               </h3>
               <p className="text-gray-600">
-                We're working on adding new services. Please check back soon!
+                The service you are looking for does not exist or has been
+                removed.
               </p>
             </article>
           </section>
