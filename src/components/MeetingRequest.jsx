@@ -1,6 +1,6 @@
 export default function MeetingRequestForm() {
   return (
-    <section className="mt-5 d-flex justify-content-center">
+    <section className="mt-5 d-flex justify-content-center h-1 align-middle ">
       <form
         onSubmit={(e) => {
           e.preventDefault();

@@ -20,10 +20,6 @@ function CareerCard({
           <p className="text-sm text-gray-600">{description}</p>
 
           <p className="text-sm">
-            <span className="font-medium">Posted By:</span> {postedBy}
-          </p>
-
-          <p className="text-sm">
             <span className="font-medium">Posted:</span>{" "}
             {new Date(postedDate).toLocaleDateString()} &nbsp;|&nbsp;
             <span className="font-medium">Deadline:</span>{" "}

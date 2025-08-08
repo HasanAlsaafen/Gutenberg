@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaPhone,
   FaCalendarAlt,
@@ -7,6 +8,10 @@ import {
 } from "react-icons/fa";
 
 const CallToAction = () => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/bookDemo");
+  };
   return (
     <section className="py-20 bg-gradient-to-br from-slate-100 to-gray-100 flex flex-col justify-center">
       <main className="container mx-auto px-6 lg:px-8 flex justify-center items-center">
@@ -28,7 +33,10 @@ const CallToAction = () => {
               </hgroup>
 
               <section className="flex flex-col sm:flex-row gap-4">
-                <button className="group bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 flex items-center space-x-3">
+                <button
+                  onClick={handleClick}
+                  className="group bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-8 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 flex items-center space-x-3"
+                >
                   <FaCalendarAlt className="text-xl" />
                   <span>Book a Free Call</span>
                   <FaArrowRight className="transition-transform group-hover:translate-x-1" />

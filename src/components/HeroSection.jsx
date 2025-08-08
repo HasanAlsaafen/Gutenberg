@@ -1,7 +1,12 @@
 import React from "react";
 import { FaArrowRight, FaDesktop } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
 const HeroSection = () => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/#contact");
+  };
+
   return (
     <section className="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 min-h-screen flex flex-col justify-center items-center overflow-hidden">
       <span className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.3),transparent_50%)]"></span>
@@ -25,8 +30,11 @@ const HeroSection = () => {
             </hgroup>
 
             <nav className="flex flex-col sm:flex-row gap-4">
-              <button className="group bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 flex items-center justify-center space-x-2">
-                <span>Request a Demo</span>
+              <button
+                onClick={handleClick}
+                className="group bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-2xl text-base sm:text-lg font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 flex items-center justify-center space-x-2"
+              >
+                <span>Contact us</span>
                 <FaArrowRight className="transition-transform group-hover:translate-x-1" />
               </button>
             </nav>
