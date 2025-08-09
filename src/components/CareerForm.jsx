@@ -199,7 +199,7 @@ const CareerForm = ({ jobs }) => {
       console.log("Response headers:", [...response.headers.entries()]);
 
       if (!response.ok) {
-        let errorMessage = "حدث خطأ غير متوقع";
+        let errorMessage = "Unexpected error!";
 
         try {
           const errorData = await response.json();
@@ -207,7 +207,6 @@ const CareerForm = ({ jobs }) => {
           errorMessage = errorData.message || errorData.title || errorMessage;
         } catch (parseError) {
           console.log("Could not parse error response:", parseError);
-          // If we can't parse JSON, try to get text
           try {
             const errorText = await response.text();
             console.log("Error text:", errorText);
@@ -218,15 +217,11 @@ const CareerForm = ({ jobs }) => {
         }
 
         if (response.status === 400) {
-          throw new Error(errorMessage || "البيانات المدخلة غير صحيحة");
+          throw new Error(errorMessage || " Data is incorrect!");
         } else if (response.status === 404) {
-          throw new Error("الوظيفة غير موجودة أو منتهية الصلاحية");
+          throw new Error("The job isn't Available yet");
         } else if (response.status === 409) {
-          throw new Error("لقد تقدمت لهذه الوظيفة مسبقاً");
-        } else if (response.status === 500) {
-          throw new Error(
-            "خطأ في الخادم. يرجى المحاولة لاحقاً أو التواصل مع الدعم الفني"
-          );
+          throw new Error("You've just Applied!");
         } else {
           throw new Error(errorMessage);
         }
@@ -248,7 +243,7 @@ const CareerForm = ({ jobs }) => {
     } catch (error) {
       console.error("Error submitting application:", error);
       setErrors({
-        general: error.message || "فشل في إرسال الطلب، حاول مرة أخرى",
+        general: error.message,
       });
     } finally {
       setSubmitting(false);

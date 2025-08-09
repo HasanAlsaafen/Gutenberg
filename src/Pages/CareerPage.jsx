@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import CareerCard from "../components/CareerCard";
 import CareerForm from "../components/CareerForm";
+import Navbar from "../components/Nav";
+import Footer from "../components/Footer";
 
 function CareerPage() {
   const [jobs, setJobs] = useState([]);
@@ -39,26 +41,30 @@ function CareerPage() {
       <Route
         path="/"
         element={
-          <main className="px-4 sm:px-6 md:px-10 lg:px-20 xl:px-40 max-w-[1200px] mx-auto">
-            <section className="mb-6">
-              <h1 className="text-2xl font-bold">
-                Welcome to the available job opportunities at Trusted Systems
-                Company for Information Technology
-              </h1>
-            </section>
+          <>
+            <Navbar />
+            <main className="px-4 sm:px-6 md:px-10 lg:px-20 xl:px-40 max-w-[1200px] mx-auto my-5">
+              <section className="mb-6">
+                <h1 className="text-2xl font-bold">
+                  Welcome to the available job opportunities at Trusted Systems
+                  Company for Information Technology
+                </h1>
+              </section>
 
-            <SearchBar fetchJobsCustom={fetchJobsCustom} />
+              <SearchBar fetchJobsCustom={fetchJobsCustom} />
 
-            <section className="space-y-4 my-6">
-              {jobs.length > 0 ? (
-                jobs.map((job) => (
-                  <CareerCard key={job.jobId || job.id} {...job} />
-                ))
-              ) : (
-                <p className="text-center text-gray-500">No jobs found.</p>
-              )}
-            </section>
-          </main>
+              <section className="space-y-4 my-6">
+                {jobs.length > 0 ? (
+                  jobs.map((job) => (
+                    <CareerCard key={job.jobId || job.id} {...job} />
+                  ))
+                ) : (
+                  <p className="text-center text-gray-500">No jobs found.</p>
+                )}
+              </section>
+            </main>
+            <Footer />
+          </>
         }
       />
 
