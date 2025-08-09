@@ -283,14 +283,6 @@ function Navbar() {
                     </button>
                   </div>
                 </form>
-                <button
-                  className="bg-amber-300 rounded-2xl p-1"
-                  onClick={() => {
-                    navigate("/dashboard");
-                  }}
-                >
-                  Go to dashBoard
-                </button>
               </div>
 
               {/* Mobile Menu Toggle */}
