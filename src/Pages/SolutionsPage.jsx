@@ -105,7 +105,7 @@ export default function Solutions() {
             </button>
 
             <img
-              src={`assets/${selected.image}`}
+              src={selected.image}
               alt={selected.title}
               className="w-24 h-24 mx-auto mb-4"
             />

@@ -6,8 +6,8 @@ import CreateServiceForm from "./CreateServiceForm";
 import ServiceList from "./ServiceList";
 import CreateSolution from "./CreateSolution";
 import SolutionList from "./SolutionList";
-import Support from "./Support";
-
+import Jobs from "./Jobs";
+import Applications from "./ApplicationOrders";
 const DashboardContent = ({ activeSection }) => {
   const renderContent = () => {
     switch (activeSection) {
@@ -24,8 +24,10 @@ const DashboardContent = ({ activeSection }) => {
         return <CreateSolution />;
       case "SolutionList":
         return <SolutionList />;
-      case "support":
-        return <Support />;
+      case "Jobs":
+        return <Jobs />;
+      case "Applications":
+        return <Applications />;
       default:
         <AddUser />;
     }

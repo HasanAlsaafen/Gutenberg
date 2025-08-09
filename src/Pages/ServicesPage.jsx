@@ -99,9 +99,6 @@ const ServiceDetailPage = () => {
         <div className="max-w-4xl mx-auto">
           {/* Service Header */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full mb-6">
-              <FaServicestack className="text-white text-2xl" />
-            </div>
             <div className="inline-block px-4 py-2 bg-purple-100 text-purple-800 text-sm font-semibold rounded-full mb-4">
               Service ID: {service.serviceId}
             </div>
@@ -112,12 +109,12 @@ const ServiceDetailPage = () => {
 
           {/* Service Image */}
           {service.image && (
-            <div className="mb-12 flex justify-center">
-              <div className="relative max-w-2xl w-full">
+            <div className="mb-12 flex justify-center align-middle">
+              <div className="relative max-w-2xl ">
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="w-full h-auto rounded-2xl shadow-2xl object-cover"
+                  className="w-50 h-50 rounded-2xl"
                   onError={(e) => {
                     e.target.style.display = "none";
                   }}
@@ -184,18 +181,9 @@ const ServiceDetailPage = () => {
             >
               Go Back
             </button>
-            <button
-              onClick={() => (window.location.href = "/#contact")}
-              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg hover:from-purple-700 hover:to-indigo-700 transition-all duration-300 font-semibold shadow-lg"
-            >
-              Get This Service
-            </button>
           </div>
         </div>
       </section>
-
-      {/* Call to Action */}
-      <CallToAction />
 
       <Footer />
     </main>
