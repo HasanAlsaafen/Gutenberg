@@ -3,9 +3,7 @@ import CallToAction from "../components/CallToAction";
 import HeroSection from "../components/HeroSection";
 import ServicesPreview from "../components/Services";
 import Navbar from "../components/Nav";
-import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
-import MeetingRequestForm from "../components/MeetingRequest";
 
 function LandingPage() {
   return (
@@ -14,7 +12,6 @@ function LandingPage() {
       <HeroSection />
       <ServicesPreview />
       <CallToAction />
-      <ContactForm />
       <Footer />
     </>
   );

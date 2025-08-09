@@ -248,7 +248,7 @@ function Navbar() {
                 </li>
                 <li>
                   <Link
-                    to="#contact"
+                    to="/contact"
                     className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
                   >
                     Contact
@@ -379,13 +379,13 @@ function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <a
-                    href="#contact"
+                  <Link
+                    to="/contact"
                     className="block py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors"
                     onClick={() => setSidebarOpen(false)}
                   >
                     Contact
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link
