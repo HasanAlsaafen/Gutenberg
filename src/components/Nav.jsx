@@ -59,7 +59,7 @@ function Navbar() {
 
   // Handle service click
   const handleServiceClick = (serviceId) => {
-    navigate(`/services?serviceId=${serviceId}`);
+    navigate(`/services/${serviceId}`);
     setIsServicesDropdownOpen(false);
     setSidebarOpen(false);
   };
@@ -217,7 +217,9 @@ function Navbar() {
                         services.map((service) => (
                           <button
                             key={service.id}
-                            onClick={() => handleServiceClick(service.id)}
+                            onClick={() =>
+                              handleServiceClick(service.serviceId)
+                            }
                             className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors"
                           >
                             <div className="font-medium">{service.name}</div>
@@ -282,10 +284,12 @@ function Navbar() {
                   </div>
                 </form>
                 <button
-                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                  onClick={handleQuoteRequest}
+                  className="bg-amber-300 rounded-2xl p-1"
+                  onClick={() => {
+                    navigate("/dashboard");
+                  }}
                 >
-                  Get a quote now
+                  Go to dashBoard
                 </button>
               </div>
 

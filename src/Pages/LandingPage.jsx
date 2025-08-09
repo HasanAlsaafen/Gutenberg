@@ -5,6 +5,7 @@ import ServicesPreview from "../components/Services";
 import Navbar from "../components/Nav";
 import ContactForm from "../components/ContactForm";
 import Footer from "../components/Footer";
+import MeetingRequestForm from "../components/MeetingRequest";
 
 function LandingPage() {
   return (

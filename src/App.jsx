@@ -7,6 +7,7 @@ import SolutionsPage from "./Pages/SolutionsPage";
 import Dashboard from "./Pages/Dashboard";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./components/NotFound";
+import MeetingRequest from "./components/MeetingRequest";
 import CareerForm from "./components/CareerForm";
 import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./routes/PrivateRoute";
@@ -15,18 +16,12 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute adminOnly>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/careers" element={<CareerPage />} />
         <Route path="/careers/*" element={<CareerPage />} />
         <Route path="/services" element={<ServicesPage />} />
+        <Route path="/services/:serviceId" element={<ServicesPage />} />
+        <Route path="/bookDemo" element={<MeetingRequest />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/solutions" element={<SolutionsPage />} />
         {/* Add other routes as needed */}

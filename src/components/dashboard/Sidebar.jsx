@@ -1,19 +1,17 @@
 import React from "react";
 import {
-  FaDesktop,
-  FaCode,
+  FaUser,
+  FaList,
   FaCog,
   FaBrain,
-  FaUsers,
+  FaPlus,
   FaClock,
   FaChartBar,
   FaCogs,
-  FaHeadset,
+  FaMailBulk,
   FaBars,
-  FaHome,
+  FaEmpire,
   FaTimes,
-  FaClipboardList,
-  FaFileAlt,
 } from "react-icons/fa";
 
 const Sidebar = ({
@@ -23,21 +21,21 @@ const Sidebar = ({
   setActiveSection,
 }) => {
   const navigationItems = [
-    { id: "AddUser", label: "Add User", icon: FaHome },
-    { id: "UserList", label: "User list", icon: FaCode },
+    { id: "AddUser", label: "Add User", icon: FaUser },
+    { id: "UserList", label: "User list", icon: FaList },
   ];
 
   const secondaryItems = [
-    { id: "CreateService", label: "Create Service", icon: FaUsers },
-    { id: "ServiceList", label: "Services ", icon: FaClock },
-    { id: "JobOrders", label: "Job Orders", icon: FaClipboardList },
-    { id: "ApplicationOrders", label: "Applications", icon: FaFileAlt },
-    { id: "support", label: "Support", icon: FaHeadset },
+    { id: "CreateService", label: "Create Service", icon: FaPlus },
+    { id: "ServiceList", label: "Services ", icon: FaList },
   ];
-
   const SolutionItems = [
-    { id: "CreateSolution", label: "Create Solution", icon: FaChartBar },
-    { id: "SolutionList", label: "Solution List", icon: FaCogs },
+    { id: "CreateSolution", label: "Create Solution", icon: FaPlus },
+    { id: "SolutionList", label: "Solution List", icon: FaList },
+  ];
+  const Jobs = [{ id: "Jobs", label: "Jobs", icon: FaEmpire }];
+  const Applications = [
+    { id: "Applications", label: "Applications", icon: FaMailBulk },
   ];
 
   const NavItem = ({ item, isActive, onClick }) => (
@@ -70,9 +68,10 @@ const Sidebar = ({
       )}
 
       <aside
-        className={`fixed left-0 top-0 h-full bg-gradient-to-b from-slate-900 to-slate-800 shadow-2xl transition-all duration-300 z-50 flex flex-col ${
-          collapsed ? "w-16" : "w-72"
-        }`}
+        className={`fixed left-0 top-0 h-full bg-gradient-to-b overflow-scroll
+           from-slate-900 to-slate-800 shadow-2xl transition-all duration-300 z-50 flex flex-col ${
+             collapsed ? "w-16" : "w-72"
+           }`}
       >
         <header className="flex items-center justify-between p-4 border-b border-slate-700">
           {!collapsed && (
@@ -134,6 +133,40 @@ const Sidebar = ({
             )}
             <ul className="space-y-1">
               {SolutionItems.map((item) => (
+                <NavItem
+                  key={item.id}
+                  item={item}
+                  isActive={activeSection === item.id}
+                  onClick={setActiveSection}
+                />
+              ))}
+            </ul>
+          </section>{" "}
+          <section className="mt-8">
+            {!collapsed && (
+              <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                Jobs
+              </h2>
+            )}
+            <ul className="space-y-1">
+              {Jobs.map((item) => (
+                <NavItem
+                  key={item.id}
+                  item={item}
+                  isActive={activeSection === item.id}
+                  onClick={setActiveSection}
+                />
+              ))}
+            </ul>
+          </section>{" "}
+          <section className="mt-8">
+            {!collapsed && (
+              <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                Applications
+              </h2>
+            )}
+            <ul className="space-y-1">
+              {Applications.map((item) => (
                 <NavItem
                   key={item.id}
                   item={item}

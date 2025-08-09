@@ -18,7 +18,7 @@ const ServicesPreview = () => {
 
   useEffect(() => {
     axios
-      .get("/api/Services")
+      .get("https://gutenberg-server-production.up.railway.app/api/Services")
       .then((res) => {
         setServices(res.data);
         setLoading(false);
