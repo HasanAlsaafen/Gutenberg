@@ -23,6 +23,7 @@ const Sidebar = ({
   const navigationItems = [
     { id: "AddUser", label: "Add User", icon: FaUser },
     { id: "UserList", label: "User list", icon: FaList },
+    { id: "MeetingRequests", label: "Meeting Requests", icon: FaClock },
   ];
 
   const secondaryItems = [

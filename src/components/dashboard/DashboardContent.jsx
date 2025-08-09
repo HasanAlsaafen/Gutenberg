@@ -8,6 +8,8 @@ import CreateSolution from "./CreateSolution";
 import SolutionList from "./SolutionList";
 import Jobs from "./Jobs";
 import Applications from "./ApplicationOrders";
+import MeetingRequests from "./MeetingRequests";
+
 const DashboardContent = ({ activeSection }) => {
   const renderContent = () => {
     switch (activeSection) {
@@ -28,6 +30,8 @@ const DashboardContent = ({ activeSection }) => {
         return <Jobs />;
       case "Applications":
         return <Applications />;
+      case "MeetingRequests":
+        return <MeetingRequests />;
       default:
         <AddUser />;
     }
