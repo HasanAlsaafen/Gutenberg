@@ -284,10 +284,12 @@ function Navbar() {
                   </div>
                 </form>
                 <button
-                  className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-                  onClick={handleQuoteRequest}
+                  className="bg-amber-300 rounded-2xl p-1"
+                  onClick={() => {
+                    navigate("/dashboard");
+                  }}
                 >
-                  Get a quote now
+                  Go to dashBoard
                 </button>
               </div>
 
