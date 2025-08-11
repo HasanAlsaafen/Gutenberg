@@ -5,11 +5,16 @@ const SolutionList = () => {
   const [solutions, setSolutions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const token = localStorage.getItem("token");
   const fetchSolutions = async () => {
     try {
       const response = await axios.get(
-        "https://gutenberg-server-production.up.railway.app/api/Solution"
+        "https://gutenberg-server-production.up.railway.app/api/Solution",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setSolutions(response.data);
       setLoading(false);
@@ -26,7 +31,12 @@ const SolutionList = () => {
 
     try {
       await axios.delete(
-        `https://gutenberg-server-production.up.railway.app/api/Solution/${id}`
+        `https://gutenberg-server-production.up.railway.app/api/Solution/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setSolutions((prev) => prev.filter((s) => s.solutionId !== id));
     } catch (err) {

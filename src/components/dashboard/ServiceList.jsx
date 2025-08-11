@@ -3,6 +3,7 @@ import axios from "axios";
 
 const ServiceList = () => {
   const [services, setServices] = useState([]);
+  const token = localStorage.getItem("token");
 
   const fetchServices = async () => {
     try {
@@ -19,7 +20,12 @@ const ServiceList = () => {
     if (window.confirm("هل أنت متأكد من حذف هذه الخدمة؟")) {
       try {
         await axios.delete(
-          `https://gutenberg-server-production.up.railway.app/api/Services/${id}`
+          `https://gutenberg-server-production.up.railway.app/api/Services/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setServices(services.filter((s) => s.id !== id));
       } catch (error) {

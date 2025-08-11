@@ -10,6 +10,7 @@ const CreateServiceForm = () => {
 
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const token = localStorage.getItem("token");
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -29,7 +30,12 @@ const CreateServiceForm = () => {
     try {
       await axios.post(
         "https://gutenberg-server-production.up.railway.app/api/Services",
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setSuccessMsg("تمت إضافة الخدمة بنجاح");
       setFormData({ title: "", description: "", image: "" });

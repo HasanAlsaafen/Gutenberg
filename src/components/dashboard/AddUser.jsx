@@ -8,6 +8,7 @@ export default function AddMemberForm() {
   const [role, setRole] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const token = localStorage.getItem("token");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +24,12 @@ export default function AddMemberForm() {
     try {
       const response = await axios.post(
         "https://gutenberg-server-production.up.railway.app/api/user",
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setMessage("✅ تم إنشاء المستخدم بنجاح");

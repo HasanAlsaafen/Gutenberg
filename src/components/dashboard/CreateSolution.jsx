@@ -6,9 +6,9 @@ const CreateSolution = () => {
     title: "",
     description: "",
     solutionType: "Custom",
-    image: "", // Base64 string
+    image: "",
   });
-
+  const token = localStorage.getItem("token");
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
@@ -26,7 +26,7 @@ const CreateSolution = () => {
     reader.onloadend = () => {
       setFormData((prev) => ({
         ...prev,
-        image: reader.result, // Base64 string
+        image: reader.result,
       }));
     };
     reader.readAsDataURL(file);
@@ -37,7 +37,12 @@ const CreateSolution = () => {
     try {
       await axios.post(
         "https://gutenberg-server-production.up.railway.app/api/Solution",
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setMessage("✅ تم إنشاء الحل بنجاح");
       setFormData({

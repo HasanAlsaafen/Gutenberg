@@ -1,7 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_URL = "/api/Job";
+const API_URL = "https://gutenberg-server-production.up.railway.app/api/Jobs";
+
+// إنشاء axios instance مع إعدادات افتراضية
+const api = axios.create({
+  baseURL: API_URL,
+});
+
+// إضافة interceptor لوضع التوكن تلقائيًا
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const JobOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -22,7 +36,7 @@ const JobOrders = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.get(API_URL);
+      const res = await api.get("/");
       setOrders(res.data);
     } catch {
       setError("Failed to fetch job orders.");
@@ -42,13 +56,15 @@ const JobOrders = () => {
 
     const { userId, title, description, postedDate, deadline, postedBy } = form;
 
-    if (!userId || !title || !description || !postedDate || !deadline) {
+    if (
+      !userId ||
+      !title ||
+      !description ||
+      !postedDate ||
+      !deadline ||
+      !postedBy
+    ) {
       setError("All fields are required.");
-      return;
-    }
-
-    if (!postedBy) {
-      setError("Posted By field is required.");
       return;
     }
 
@@ -63,23 +79,23 @@ const JobOrders = () => {
         const putPayload = {
           jobId: Number(editingId),
           userId: parsedUserId,
-          title: title,
-          description: description,
+          title,
+          description,
           postedDate: new Date(postedDate).toISOString(),
           deadline: new Date(deadline).toISOString(),
-          PostedBy: postedBy,
+          postedBy, //統一 الاسم بالحروف الصغيرة
         };
-        await axios.put(`${API_URL}/${editingId}`, putPayload);
+        await api.put(`/${editingId}`, putPayload);
       } else {
-        // For POST, use the form data for creating a job
-        await axios.post(API_URL, {
-          jobId: Math.floor(Math.random() * 1000), // Generate a random jobId or let the backend handle it
-          title: form.title,
-          description: form.description,
-          postedDate: new Date(form.postedDate).toISOString(),
-          deadline: new Date(form.deadline).toISOString(),
-          userId: Number(form.userId),
-        });
+        const postPayload = {
+          title,
+          description,
+          postedDate: new Date(postedDate).toISOString(),
+          deadline: new Date(deadline).toISOString(),
+          userId: parsedUserId,
+          postedBy,
+        };
+        await api.post("/", postPayload);
         setSuccess("Job added successfully!");
       }
 
@@ -113,7 +129,7 @@ const JobOrders = () => {
     setError("");
     setSuccess("");
     try {
-      await axios.delete(`${API_URL}/${id}`);
+      await api.delete(`/${id}`);
       setSuccess("Job deleted successfully!");
       fetchOrders();
     } catch {
@@ -132,7 +148,7 @@ const JobOrders = () => {
 
   const handleEdit = (job) => {
     setForm({
-      userId: "",
+      userId: job.userId || "",
       title: job.title || "",
       description: job.description || "",
       postedDate: formatDateForInput(job.postedDate),
