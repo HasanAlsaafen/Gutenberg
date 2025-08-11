@@ -222,12 +222,7 @@ function Navbar() {
                             }
                             className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors"
                           >
-                            <div className="font-medium">{service.name}</div>
-                            {service.description && (
-                              <div className="text-xs text-gray-500 mt-1 truncate">
-                                {service.description}
-                              </div>
-                            )}
+                            <div className="font-medium">{service.title}</div>
                           </button>
                         ))
                       ) : (
@@ -349,21 +344,23 @@ function Navbar() {
                     {isServicesDropdownOpen && (
                       <div className="bg-gray-50 mt-2 rounded-lg">
                         {loading ? (
-                          <div className="px-6 py-3 text-sm text-gray-500">
+                          <div className="px-6 py-3 text-sm text-black">
                             Loading services...
                           </div>
                         ) : services.length > 0 ? (
                           services.map((service) => (
-                            <button
-                              key={service.id}
-                              onClick={() => handleServiceClick(service.id)}
-                              className="block w-full text-left px-6 py-2 text-sm text-gray-600 hover:text-blue-600 transition-colors"
+                            <li
+                              key={service.serviceId}
+                              onClick={() =>
+                                handleServiceClick(service.serviceId)
+                              }
+                              className="block w-full text-left px-6 py-2 text-sm text-black hover:text-blue-600 transition-colors"
                             >
-                              {service.name}
-                            </button>
+                              {service.title}
+                            </li>
                           ))
                         ) : (
-                          <div className="px-6 py-3 text-sm text-gray-500">
+                          <div className="px-6 py-3 text-sm text-black">
                             No services available
                           </div>
                         )}
@@ -397,6 +394,16 @@ function Navbar() {
                   >
                     Careers
                   </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                    className="bg-blue-700 text-white p-2 rounded-2xl"
+                  >
+                    log in
+                  </button>
                 </li>
               </ul>
 
