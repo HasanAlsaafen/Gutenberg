@@ -33,7 +33,7 @@ const UsersList = () => {
         `https://gutenberg-server-production.up.railway.app/api/user/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // نفس الشيء هنا للتوثيق
+            Authorization: `Bearer ${token}`, 
           },
         }
       );

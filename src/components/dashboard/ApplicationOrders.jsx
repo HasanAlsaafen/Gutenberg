@@ -15,12 +15,17 @@ const ApplicationOrders = () => {
     applicationDate: "",
   });
   const [editingId, setEditingId] = useState(null);
+  const token = localStorage.getItem("token");
 
   const fetchApplications = async () => {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.get(API_URL);
+      const res = await axios.get(API_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setApplications(res.data);
     } catch {
       setError("Failed to fetch applications.");

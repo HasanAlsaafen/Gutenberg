@@ -27,10 +27,20 @@ const Dashboard = () => {
           sidebarCollapsed ? "ml-16" : "ml-72"
         } overflow-auto`}
       >
-        <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+        <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4 flex justify-between">
           <h1 className="text-2xl font-bold text-gray-900">
             Gutenberg Dashboard
           </h1>
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/login");
+            }}
+            className="bg-red-700 p-2 rounded-2xl text-white"
+          >
+            {" "}
+            log out
+          </button>
         </header>
 
         <DashboardContent activeSection={activeSection} />
