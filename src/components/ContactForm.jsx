@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 
 function ContactForm() {
+  const [services, setServices] = useState([]);
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -17,7 +19,13 @@ function ContactForm() {
       [name]: value,
     });
   }
-
+  useEffect(() => {
+    axios
+      .get("https://gutenberg-server-production.up.railway.app/api/Services")
+      .then((res) => {
+        setServices(res.data);
+      });
+  }, []);
   return (
     <main
       id="contact"
@@ -114,9 +122,14 @@ function ContactForm() {
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">Select Service</option>
-                <option value="web">Web Development</option>
-                <option value="mobile">Mobile App</option>
-                <option value="custom">Custom Software</option>
+                {services.map((service) => (
+                  <option
+                    key={service.serviceId}
+                    value={String(service.serviceId)}
+                  >
+                    {service.title}
+                  </option>
+                ))}
               </select>
             </div>
 
