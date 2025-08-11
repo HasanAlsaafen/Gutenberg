@@ -1,6 +1,7 @@
 import React from "react";
 import AddUser from "./AddUser";
 import UsersList from "./UsersList";
+import Greeting from "./Greeting";
 
 import CreateServiceForm from "./CreateServiceForm";
 import ServiceList from "./ServiceList";
@@ -29,7 +30,7 @@ const DashboardContent = ({ activeSection }) => {
       case "Applications":
         return <Applications />;
       default:
-        <AddUser />;
+        return <Greeting />;
     }
   };
 

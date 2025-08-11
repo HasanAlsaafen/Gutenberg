@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/dashboard/Sidebar";
 import DashboardContent from "../components/dashboard/DashboardContent";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [activeSection, setActiveSection] = useState("overview");
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+    }
+  }, [navigate]);
   return (
     <section className="flex h-screen bg-gray-50">
       <Sidebar

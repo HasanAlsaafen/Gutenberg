@@ -1,12 +1,51 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const nav = useNavigate();
+  function parseJwt(token) {
+    try {
+      return JSON.parse(atob(token.split(".")[1]));
+    } catch (e) {
+      alert(e);
+    }
+  }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Logging in as admin:", email, password);
+
+    try {
+      const response = await fetch(
+        "https://gutenberg-server-production.up.railway.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (!response.ok) {
+        alert("Login failed: invalid email or password");
+        return;
+      }
+
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("Name", email);
+      const decoded = parseJwt(data.token);
+      const role =
+        decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+      localStorage.setItem("Role", role);
+
+      nav("/dashboard");
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("An error occurred");
+    }
   };
 
   return (

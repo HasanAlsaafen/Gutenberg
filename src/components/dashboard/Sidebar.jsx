@@ -57,6 +57,7 @@ const Sidebar = ({
       </button>
     </li>
   );
+  const Role = localStorage.getItem("Role");
 
   return (
     <>
@@ -92,21 +93,23 @@ const Sidebar = ({
 
         <nav className="flex-1 py-6 flex flex-col">
           <section>
-            {!collapsed && (
-              <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                Users{" "}
-              </h2>
+            {!collapsed && localStorage.getItem("Role") === "Admin" && (
+              <>
+                <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                  Users
+                </h2>
+                <ul className="space-y-1">
+                  {navigationItems.map((item) => (
+                    <NavItem
+                      key={item.id}
+                      item={item}
+                      isActive={activeSection === item.id}
+                      onClick={setActiveSection}
+                    />
+                  ))}
+                </ul>
+              </>
             )}
-            <ul className="space-y-1">
-              {navigationItems.map((item) => (
-                <NavItem
-                  key={item.id}
-                  item={item}
-                  isActive={activeSection === item.id}
-                  onClick={setActiveSection}
-                />
-              ))}
-            </ul>
           </section>
           <section className="mt-8">
             {!collapsed && (
@@ -160,21 +163,23 @@ const Sidebar = ({
             </ul>
           </section>{" "}
           <section className="mt-8">
-            {!collapsed && (
-              <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                Applications
-              </h2>
+            {!collapsed && Role === "Admin" && (
+              <>
+                <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                  Applications
+                </h2>
+                <ul className="space-y-1">
+                  {Applications.map((item) => (
+                    <NavItem
+                      key={item.id}
+                      item={item}
+                      isActive={activeSection === item.id}
+                      onClick={setActiveSection}
+                    />
+                  ))}
+                </ul>
+              </>
             )}
-            <ul className="space-y-1">
-              {Applications.map((item) => (
-                <NavItem
-                  key={item.id}
-                  item={item}
-                  isActive={activeSection === item.id}
-                  onClick={setActiveSection}
-                />
-              ))}
-            </ul>
           </section>
         </nav>
 

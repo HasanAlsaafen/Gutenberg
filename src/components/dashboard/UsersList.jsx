@@ -5,10 +5,17 @@ const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const token = localStorage.getItem("token");
+
   const fetchUsers = async () => {
     try {
       const res = await axios.get(
-        "https://gutenberg-server-production.up.railway.app/api/user"
+        "https://gutenberg-server-production.up.railway.app/api/user",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       setUsers(res.data);
     } catch (err) {
@@ -23,9 +30,14 @@ const UsersList = () => {
 
     try {
       await axios.delete(
-        `https://gutenberg-server-production.up.railway.app/api/user/${id}`
+        `https://gutenberg-server-production.up.railway.app/api/user/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // نفس الشيء هنا للتوثيق
+          },
+        }
       );
-      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+      setUsers((prevUsers) => prevUsers.filter((user) => user.userId !== id));
     } catch (err) {
       console.error("خطأ في حذف المستخدم:", err);
       alert("حدث خطأ أثناء الحذف.");
@@ -51,7 +63,7 @@ const UsersList = () => {
               className="border p-3 rounded flex items-center justify-between"
             >
               <div>
-                <p className="font-semibold">{user.username}</p>
+                <p className="font-semibold">{user.name}</p>
                 <p className="text-sm text-gray-600">{user.email}</p>
               </div>
               <button

@@ -262,6 +262,16 @@ function Navbar() {
                     Careers
                   </Link>
                 </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                    className="bg-blue-700 text-white p-2 rounded-2xl"
+                  >
+                    log in
+                  </button>
+                </li>
               </ul>
 
               {/* Actions */}
