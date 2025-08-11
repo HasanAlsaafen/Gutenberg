@@ -42,15 +42,23 @@ function MeetingRequests() {
       status === "Accepted" ? 2 : status === "Pending" ? 1 : 3;
 
     axios
-      .put(`${BASE_URL}/api/MeetingRequests/${id}`, {
-        meetingId: meeting.meetingId,
-        name: meeting.name,
-        email: meeting.email,
-        topic: meeting.topic,
-        preferredDate: meeting.preferredDate,
-        meetingStatus: statusNumber,
-        responseDate: meeting.responseDate,
-      })
+      .put(
+        `${BASE_URL}/api/MeetingRequest/${id}`,
+        {
+          meetingId: meeting.meetingId,
+          name: meeting.name,
+          email: meeting.email,
+          topic: meeting.topic,
+          preferredDate: meeting.preferredDate,
+          meetingStatus: statusNumber,
+          responseDate: meeting.responseDate,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then(() => {
         setMeetings((prevMeetings) =>
           prevMeetings.map((m) =>
@@ -70,7 +78,11 @@ function MeetingRequests() {
     }
 
     axios
-      .delete(`${BASE_URL}/api/MeetingRequests/${id}`)
+      .delete(`${BASE_URL}/api/MeetingRequest/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then(() => {
         setMeetings((prevMeetings) =>
           prevMeetings.filter((m) => m.meetingId !== id)

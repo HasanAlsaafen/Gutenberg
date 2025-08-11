@@ -37,7 +37,7 @@ export default function MeetingRequestForm() {
 
     try {
       const response = await fetch(
-        "https://gutenberg-server-production.up.railway.app/api/MeetingRequests",
+        "https://gutenberg-server-production.up.railway.app/api/MeetingRequest",
         {
           method: "POST",
           headers: {
