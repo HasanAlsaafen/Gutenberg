@@ -11,9 +11,10 @@ const ApplicationOrders = () => {
   const [form, setForm] = useState({
     userId: "",
     jobId: "",
-    attachment: "",
+    attachment: null, // store File object
     applicationDate: "",
   });
+  const [attachmentUrl, setAttachmentUrl] = useState("");
   const [editingId, setEditingId] = useState(null);
   const token = localStorage.getItem("token");
 
@@ -61,26 +62,41 @@ const ApplicationOrders = () => {
       return;
     }
 
-    const payload = {
-      applicationId: Number(editingId),
-      userId: parsedUserId,
-      jobId: parsedJobId,
-      attachment: attachment || "",
-      applicationDate: new Date(applicationDate).toISOString(),
-      applicationStatus,
-    };
+    // Validate file size (max 2MB)
+    if (attachment && attachment.size > 2 * 1024 * 1024) {
+      setError("Attachment file size must be less than 2MB.");
+      return;
+    }
 
     try {
       if (editingId) {
-        await axios.put(`${API_URL}/${editingId}`, payload);
+        const formData = new FormData();
+        formData.append("applicationId", editingId);
+        formData.append("userId", parsedUserId);
+        formData.append("jobId", parsedJobId);
+        formData.append(
+          "applicationDate",
+          new Date(applicationDate).toISOString()
+        );
+        formData.append("applicationStatus", applicationStatus || "Pending");
+        if (attachment) {
+          formData.append("attachment", attachment);
+        }
+
+        await axios.put(`${API_URL}/${editingId}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
 
         setForm({
           userId: "",
           jobId: "",
-          attachment: "",
+          attachment: null,
           applicationDate: "",
           applicationStatus: "Pending",
         });
+        setAttachmentUrl("");
         setEditingId(null);
         fetchApplications();
       } else {
@@ -165,6 +181,95 @@ const ApplicationOrders = () => {
         </aside>
       )}
 
+      {/* Edit Form for updating application (attachment upload) */}
+      {editingId && (
+        <section className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-4">
+          <h2 className="text-lg font-semibold mb-4">Edit Application</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block font-medium mb-1">User ID</label>
+              <input
+                type="text"
+                value={form.userId}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, userId: e.target.value }))
+                }
+                className="border rounded px-3 py-2 w-full"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1">Job ID</label>
+              <input
+                type="text"
+                value={form.jobId}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, jobId: e.target.value }))
+                }
+                className="border rounded px-3 py-2 w-full"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1">Application Date</label>
+              <input
+                type="date"
+                value={form.applicationDate}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, applicationDate: e.target.value }))
+                }
+                className="border rounded px-3 py-2 w-full"
+                required
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-1">
+                Attachment (PDF, max 2MB)
+              </label>
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file && file.size > 2 * 1024 * 1024) {
+                    setError("Attachment file size must be less than 2MB.");
+                  } else {
+                    setError("");
+                    setForm((f) => ({ ...f, attachment: file }));
+                    setAttachmentUrl(file ? URL.createObjectURL(file) : "");
+                  }
+                }}
+                className="border rounded px-3 py-2 w-full"
+              />
+              {attachmentUrl && (
+                <iframe
+                  src={attachmentUrl}
+                  width="100%"
+                  height="200px"
+                  title="Attachment Preview"
+                  className="mt-2 border"
+                />
+              )}
+            </div>
+            <div className="flex gap-2">
+              <button
+                type="submit"
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+              >
+                Save Changes
+              </button>
+              <button
+                type="button"
+                onClick={handleCancelEdit}
+                className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </section>
+      )}
+
       <section className="bg-white rounded-lg shadow-sm border border-gray-200">
         <header className="p-6 border-b border-gray-200">
           <h2 className="text-lg font-semibold">
@@ -200,17 +305,56 @@ const ApplicationOrders = () => {
                       <p className="text-sm text-gray-600">
                         Position ID: {app.jobId}
                       </p>
-                      {app.attachment && (
-                        <p className="text-sm text-gray-600">
-                          Attachment:
-                          <iframe
-                            src={app.attachment}
-                            width="100%"
-                            height="600px"
-                            title="PDF Viewer"
-                          />
-                        </p>
-                      )}
+                      {app.attachment &&
+                        (() => {
+                          try {
+                            // Remove any prefix like "data:application/pdf;base64,"
+                            const base64Data = app.attachment.split(",").pop();
+                            const byteCharacters = atob(base64Data);
+                            const byteNumbers = new Array(
+                              byteCharacters.length
+                            );
+                            for (let i = 0; i < byteCharacters.length; i++) {
+                              byteNumbers[i] = byteCharacters.charCodeAt(i);
+                            }
+                            const byteArray = new Uint8Array(byteNumbers);
+                            const blob = new Blob([byteArray], {
+                              type: "application/pdf",
+                            });
+                            const blobUrl = URL.createObjectURL(blob);
+
+                            const handleViewFullCV = () => {
+                              window.open(blobUrl, "_blank");
+                            };
+
+                            return (
+                              <p className="text-sm text-gray-600">
+                                Attachment:
+                                <iframe
+                                  src={blobUrl}
+                                  width="100%"
+                                  height="600px"
+                                  title="PDF Viewer"
+                                  className="mb-2"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={handleViewFullCV}
+                                  className="mt-2 inline-block bg-blue-500 hover:bg-blue-700 text-white text-xs font-semibold py-1 px-3 rounded"
+                                >
+                                  View Full CV
+                                </button>
+                              </p>
+                            );
+                          } catch (e) {
+                            console.error("Invalid PDF data", e);
+                            return (
+                              <p className="text-red-500">
+                                Invalid PDF attachment.
+                              </p>
+                            );
+                          }
+                        })()}
                     </hgroup>
 
                     <menu className="flex gap-2 items-center">

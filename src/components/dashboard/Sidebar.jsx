@@ -12,6 +12,7 @@ import {
   FaBars,
   FaEmpire,
   FaTimes,
+  FaMeetup,
 } from "react-icons/fa";
 
 const Sidebar = ({
@@ -37,6 +38,7 @@ const Sidebar = ({
   const Applications = [
     { id: "Applications", label: "Applications", icon: FaMailBulk },
   ];
+  const Meeting = [{ id: "Meeting", label: "Meetings", icon: FaMeetup }];
 
   const NavItem = ({ item, isActive, onClick }) => (
     <li>
@@ -170,6 +172,25 @@ const Sidebar = ({
                 </h2>
                 <ul className="space-y-1">
                   {Applications.map((item) => (
+                    <NavItem
+                      key={item.id}
+                      item={item}
+                      isActive={activeSection === item.id}
+                      onClick={setActiveSection}
+                    />
+                  ))}
+                </ul>
+              </>
+            )}
+          </section>{" "}
+          <section className="mt-8">
+            {!collapsed && Role === "Admin" && (
+              <>
+                <h2 className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                  Meetings
+                </h2>
+                <ul className="space-y-1">
+                  {Meeting.map((item) => (
                     <NavItem
                       key={item.id}
                       item={item}

@@ -2,7 +2,7 @@ import React from "react";
 import AddUser from "./AddUser";
 import UsersList from "./UsersList";
 import Greeting from "./Greeting";
-
+import Meeting from "./MeetingRequest";
 import CreateServiceForm from "./CreateServiceForm";
 import ServiceList from "./ServiceList";
 import CreateSolution from "./CreateSolution";
@@ -27,6 +27,8 @@ const DashboardContent = ({ activeSection }) => {
         return <SolutionList />;
       case "Jobs":
         return <Jobs />;
+      case "Meeting":
+        return <Meeting />;
       case "Applications":
         return <Applications />;
       default:
