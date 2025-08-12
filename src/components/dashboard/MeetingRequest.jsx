@@ -4,6 +4,7 @@ import axios from "axios";
 const BASE_URL = "https://gutenberg-server-production.up.railway.app";
 
 function MeetingRequests() {
+  const [reload, setReload] = useState(false);
   const [meetings, setMeetings] = useState([]);
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -23,7 +24,7 @@ function MeetingRequests() {
       .catch((error) => {
         console.error("Error fetching meetings:", error);
       });
-  }, []);
+  }, [token, reload]);
 
   const updateStatus = (id, status) => {
     if (!id) {
@@ -65,6 +66,7 @@ function MeetingRequests() {
             m.meetingId === id ? { ...m, meetingStatus: statusNumber } : m
           )
         );
+        setReload((reload) => !reload);
       })
       .catch((error) => {
         console.error("Error updating status:", error.response?.data || error);
@@ -87,6 +89,7 @@ function MeetingRequests() {
         setMeetings((prevMeetings) =>
           prevMeetings.filter((m) => m.meetingId !== id)
         );
+        setReload((reload) => !reload);
       })
       .catch((error) => {
         console.error("Error deleting meeting:", error.response?.data || error);

@@ -47,7 +47,7 @@ const SolutionList = () => {
 
   useEffect(() => {
     fetchSolutions();
-  }, []);
+  }, [solutions]);
 
   if (loading) return <p>جاري التحميل...</p>;
   if (error) return <p className="text-red-600">{error}</p>;

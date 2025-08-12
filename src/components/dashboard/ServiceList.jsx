@@ -36,7 +36,7 @@ const ServiceList = () => {
 
   useEffect(() => {
     fetchServices();
-  }, []);
+  }, [services]);
 
   return (
     <div className="p-4">

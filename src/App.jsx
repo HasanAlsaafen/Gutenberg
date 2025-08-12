@@ -7,6 +7,7 @@ import SolutionsPage from "./Pages/SolutionsPage";
 import Dashboard from "./Pages/Dashboard";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./components/NotFound";
+import ContactUs from "./Pages/ContactUs";
 import MeetingRequest from "./components/MeetingRequest";
 import CareerForm from "./components/CareerForm";
 import { AuthProvider } from "./context/AuthContext";
@@ -24,6 +25,7 @@ function App() {
         <Route path="/bookDemo" element={<MeetingRequest />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/solutions" element={<SolutionsPage />} />
+        <Route path="/contact" element={<ContactUs />} />
         {/* Add other routes as needed */}
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -5,6 +5,7 @@ const API_URL =
   "https://gutenberg-server-production.up.railway.app/api/Application";
 
 const ApplicationOrders = () => {
+  const [reload, setReload] = useState(false);
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -37,7 +38,7 @@ const ApplicationOrders = () => {
 
   useEffect(() => {
     fetchApplications();
-  }, []);
+  }, [reload]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -98,7 +99,7 @@ const ApplicationOrders = () => {
         });
         setAttachmentUrl("");
         setEditingId(null);
-        fetchApplications();
+        setReload((r) => !r);
       } else {
         setError(
           "Creating new applications is not available. You can only update existing applications."
@@ -128,7 +129,7 @@ const ApplicationOrders = () => {
     }
     try {
       await axios.delete(`${API_URL}/${id}`);
-      fetchApplications();
+      setReload((r) => !r);
     } catch {
       setError("Failed to delete application.");
     }

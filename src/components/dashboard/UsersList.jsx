@@ -33,7 +33,7 @@ const UsersList = () => {
         `https://gutenberg-server-production.up.railway.app/api/user/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -46,7 +46,7 @@ const UsersList = () => {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [users]);
 
   if (loading) return <p>جاري تحميل المستخدمين...</p>;
 
