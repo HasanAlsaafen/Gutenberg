@@ -39,7 +39,7 @@ const JobOrders = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [orders]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
