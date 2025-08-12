@@ -3,9 +3,9 @@ import axios from "axios";
 
 export default function AddMemberForm() {
   const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [Role, setRole] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const token = localStorage.getItem("token");
@@ -14,16 +14,16 @@ export default function AddMemberForm() {
     e.preventDefault();
 
     const formData = {
-      name: fullName,
-      email,
-      password,
-      role,
+      Name: fullName,
+      Email,
+      Password,
+      Role,
       phoneNumber: phone,
     };
 
     try {
       const response = await axios.post(
-        "https://gutenberg-server-production.up.railway.app/api/user",
+        "https://gutenberg-server-production.up.railway.app/api/auth/register",
         formData,
         {
           headers: {
@@ -98,7 +98,7 @@ export default function AddMemberForm() {
             required
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#1C4C78]"
             placeholder="name@example.com"
-            value={email}
+            value={Email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -117,7 +117,7 @@ export default function AddMemberForm() {
             required
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#1C4C78]"
             placeholder="********"
-            value={password}
+            value={Password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
@@ -134,8 +134,8 @@ export default function AddMemberForm() {
             name="role"
             required
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#1C4C78]"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
+            value={Role}
+            onChange={() => setRole(1)}
           >
             <option value="" disabled>
               Select role

@@ -34,6 +34,8 @@ const Dashboard = () => {
           <button
             onClick={() => {
               localStorage.removeItem("token");
+              localStorage.removeItem("Name");
+              localStorage.removeItem("Role");
               navigate("/login");
             }}
             className="bg-red-700 p-2 rounded-2xl text-white"

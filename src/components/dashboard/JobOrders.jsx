@@ -1,21 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_URL = "https://gutenberg-server-production.up.railway.app/api/Jobs";
+const API_URL = "https://gutenberg-server-production.up.railway.app/api/job";
 
-// إنشاء axios instance مع إعدادات افتراضية
-const api = axios.create({
-  baseURL: API_URL,
-});
-
-// إضافة interceptor لوضع التوكن تلقائيًا
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+const token = localStorage.getItem("token");
 
 const JobOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -36,7 +24,11 @@ const JobOrders = () => {
     setLoading(true);
     setError("");
     try {
-      const res = await api.get("/");
+      const res = await axios.get(API_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setOrders(res.data);
     } catch {
       setError("Failed to fetch job orders.");
@@ -85,7 +77,7 @@ const JobOrders = () => {
           deadline: new Date(deadline).toISOString(),
           postedBy, //統一 الاسم بالحروف الصغيرة
         };
-        await api.put(`/${editingId}`, putPayload);
+        await axios.put(`/${editingId}`, putPayload);
       } else {
         const postPayload = {
           title,
@@ -95,7 +87,11 @@ const JobOrders = () => {
           userId: parsedUserId,
           postedBy,
         };
-        await api.post("/", postPayload);
+        await axios.post(API_URL, postPayload, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setSuccess("Job added successfully!");
       }
 
@@ -129,7 +125,11 @@ const JobOrders = () => {
     setError("");
     setSuccess("");
     try {
-      await api.delete(`/${id}`);
+      await axios.delete(`${API_URL}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setSuccess("Job deleted successfully!");
       fetchOrders();
     } catch {
