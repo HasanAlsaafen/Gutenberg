@@ -24,7 +24,6 @@ export default function Solutions() {
       .then((data) => {
         setSolutions(data);
         setLoading(false);
-        // Extract unique categories from data (normalize: trim, lowercase)
         const cats = Array.from(
           new Set(
             data
@@ -37,7 +36,6 @@ export default function Solutions() {
           )
         );
         setCategories(cats);
-        // Also normalize solutionType in solutions for consistent filtering
         setSolutions(
           data.map((s) => ({
             ...s,
@@ -168,7 +166,9 @@ export default function Solutions() {
             <h1 className="text-2xl font-bold text-center mb-2 text-blue-700">
               {selected.title}
             </h1>
-            <p className="text-gray-600 mb-4 text-sm">{selected.description}</p>
+            <p className="text-gray-600  font-mono   mb-4 text-xl">
+              {selected.description}
+            </p>
             <p className="text-gray-600 mb-4 text-sm">{selected.problem}</p>
             <p className="text-blue-700 font-semibold text-sm">
               {selected.solution}
