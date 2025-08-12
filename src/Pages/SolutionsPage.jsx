@@ -9,6 +9,9 @@ export default function Solutions() {
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
 
+  const [category, setCategory] = useState("All");
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     const API =
       "https://gutenberg-server-production.up.railway.app/api/solution";
@@ -21,6 +24,11 @@ export default function Solutions() {
       .then((data) => {
         setSolutions(data);
         setLoading(false);
+        // Extract unique categories from data
+        const cats = Array.from(
+          new Set(data.map((s) => s.solutionType).filter(Boolean))
+        );
+        setCategories(cats);
       })
       .catch((err) => {
         setError(err.message);
@@ -57,13 +65,43 @@ export default function Solutions() {
         />
       </div>
 
+      {/* Category Filter Buttons */}
+      <div className="flex flex-wrap gap-2 justify-center mb-6">
+        <button
+          className={`px-4 py-2 rounded-full border text-sm font-semibold transition-colors duration-200 ${
+            category === "All"
+              ? "bg-blue-700 text-white"
+              : "bg-white text-blue-700 border-blue-700"
+          }`}
+          onClick={() => setCategory("All")}
+        >
+          All
+        </button>
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            className={`px-4 py-2 rounded-full border text-sm font-semibold transition-colors duration-200 ${
+              category === cat
+                ? "bg-blue-700 text-white"
+                : "bg-white text-blue-700 border-blue-700"
+            }`}
+            onClick={() => setCategory(cat)}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       <section className="relative max-w-7xl mx-auto transition-all duration-300 mr-20 ml-20">
         <section
           className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-8 transition-all duration-300 ${
             selected ? "md:pr-[42%]" : ""
           }`}
         >
-          {solutions.map((solution) => (
+          {(category === "All"
+            ? solutions
+            : solutions.filter((solution) => solution.solutionType === category)
+          ).map((solution) => (
             <div
               key={solution.solutionId}
               onClick={() => setSelected(solution)}
