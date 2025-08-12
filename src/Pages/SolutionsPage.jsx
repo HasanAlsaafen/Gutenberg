@@ -24,11 +24,29 @@ export default function Solutions() {
       .then((data) => {
         setSolutions(data);
         setLoading(false);
-        // Extract unique categories from data
+        // Extract unique categories from data (normalize: trim, lowercase)
         const cats = Array.from(
-          new Set(data.map((s) => s.solutionType).filter(Boolean))
+          new Set(
+            data
+              .map((s) =>
+                typeof s.solutionType === "string"
+                  ? s.solutionType.trim().toLowerCase()
+                  : null
+              )
+              .filter(Boolean)
+          )
         );
         setCategories(cats);
+        // Also normalize solutionType in solutions for consistent filtering
+        setSolutions(
+          data.map((s) => ({
+            ...s,
+            solutionType:
+              typeof s.solutionType === "string"
+                ? s.solutionType.trim().toLowerCase()
+                : s.solutionType,
+          }))
+        );
       })
       .catch((err) => {
         setError(err.message);
@@ -87,7 +105,7 @@ export default function Solutions() {
             }`}
             onClick={() => setCategory(cat)}
           >
-            {cat}
+            {cat.charAt(0).toUpperCase() + cat.slice(1)}
           </button>
         ))}
       </div>
