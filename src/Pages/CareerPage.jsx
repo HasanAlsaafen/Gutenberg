@@ -46,8 +46,8 @@ function CareerPage() {
             <main className="px-4 sm:px-6 md:px-10 lg:px-20 xl:px-40 max-w-[1200px] mx-auto my-5">
               <section className="mb-6">
                 <h1 className="text-2xl font-bold">
-                  Welcome to the available job opportunities at Trusted Systems
-                  Company for Information Technology
+                  Welcome to the available job opportunities at Gutenberg
+                  Company
                 </h1>
               </section>
 

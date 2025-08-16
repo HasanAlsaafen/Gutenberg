@@ -98,9 +98,9 @@ function Navbar() {
     alert(`Opening ${platform}`);
 
     const socialLinks = {
-      facebook: "https://facebook.com/gutenberg",
-      twitter: "https://twitter.com/gutenberg",
-      x: "https://x.com/gutenberg",
+      facebook: "#",
+      twitter: "#",
+      x: "#",
     };
 
     if (socialLinks[platform]) {
