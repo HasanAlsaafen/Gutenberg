@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const API_URL = "https://gutenberg-server-production.up.railway.app/api/job";
+const API_URL = "https://gutenberg-server-production.up.railway.app/api/Job";
 
 const token = localStorage.getItem("token");
 
@@ -75,7 +75,7 @@ const JobOrders = () => {
           description,
           postedDate: new Date(postedDate).toISOString(),
           deadline: new Date(deadline).toISOString(),
-          postedBy, //統一 الاسم بالحروف الصغيرة
+          postedBy,
         };
         await axios.put(`/${editingId}`, putPayload);
       } else {

@@ -9,11 +9,11 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    if (!localStorage.getItem("token")) {
+      console.log(localStorage.getItem("token"));
       navigate("/login");
     }
-  }, [navigate]);
+  }, []);
   return (
     <section className="flex h-screen bg-gray-50">
       <Sidebar

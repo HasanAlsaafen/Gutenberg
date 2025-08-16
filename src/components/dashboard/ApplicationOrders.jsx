@@ -128,7 +128,11 @@ const ApplicationOrders = () => {
       return;
     }
     try {
-      await axios.delete(`${API_URL}/${id}`);
+      await axios.delete(`${API_URL}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setReload((r) => !r);
     } catch {
       setError("Failed to delete application.");
